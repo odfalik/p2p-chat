@@ -10,6 +10,7 @@ const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 32;
 
 fn main() {
+    // TODO cli args for --server and --ip xxx
 
     println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost, or type \"server\" to launch a server)");
     let mut std_buf = String::new();
