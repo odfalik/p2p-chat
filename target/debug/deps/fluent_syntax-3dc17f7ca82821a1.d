@@ -1,0 +1,10 @@
+c:\Users\falik\Documents\School\21S\CS 4390 Networks\project\target\debug\deps\fluent_syntax-3dc17f7ca82821a1.rmeta: C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\lib.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\ast.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\mod.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\errors.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\ftlstream.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\unicode.rs
+
+c:\Users\falik\Documents\School\21S\CS 4390 Networks\project\target\debug\deps\fluent_syntax-3dc17f7ca82821a1.d: C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\lib.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\ast.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\mod.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\errors.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\ftlstream.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\unicode.rs
+
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\lib.rs:
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\ast.rs:
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\mod.rs:
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\errors.rs:
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\parser\ftlstream.rs:
+C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\fluent-syntax-0.9.3\src\unicode.rs:
