@@ -29,6 +29,7 @@ fn main() {
             let sender = sender.clone();
             clients.push(socket.try_clone().expect("Failed to clone client socket"));
 
+            // Spawn client-handling thread
             thread::spawn(move || loop {
                 let mut buf = vec![0; MSG_SIZE];
 
@@ -48,8 +49,8 @@ fn main() {
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
                     Err(_) => {
-                        println!("Unexpected error. Closing connection with: {}", addr);
-                        break;
+                        println!("{} disconnected", addr);
+                        break;  // Kill this thread
                     }
                 }
 

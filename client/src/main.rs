@@ -8,11 +8,21 @@ const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 32;
 
 fn main() {
-    // TODO read input ip? or maybe cli arg
+    println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
+    let mut buf = String::new();
+    stdin()
+        .read_line(&mut buf)
+        .expect("Reading from stdin failed!");
+    let mut server_ip = buf.trim();
+    if server_ip.len() == 0 {
+        server_ip = LOCAL;
+    }
 
     // Connect to server
-    let mut socket = TcpStream::connect(LOCAL)
-        .unwrap_or_else(|_| panic!("Failed to connect to {}", LOCAL));
+    let mut socket = TcpStream::connect(server_ip)
+        .unwrap_or_else(|_| panic!("Failed to connect to {}", server_ip));
+
+    println!("You are now connected to {}", server_ip);
 
     socket
         .set_nonblocking(true)
@@ -22,7 +32,6 @@ fn main() {
     let (sender, receiver) = mpsc::channel::<String>();
 
     thread::spawn(move || loop {
-
         // Read from TCP stream
         let mut buf = vec![0; MSG_SIZE];
         match socket.read_exact(&mut buf) {
