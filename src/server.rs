@@ -6,8 +6,10 @@ use std::time::Duration;
 
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 32;
+const DBG: bool = false;
 
 pub fn launch_server() {
+    println!("Launching server on {}", LOCAL);
 
     // Open up TCP listener
     let server = TcpListener::bind(LOCAL).expect("Listener failed to bind");
@@ -18,12 +20,15 @@ pub fn launch_server() {
     let mut clients = vec![];
 
     // Create inter-thread channel
+    // TODO make ServerEvent struct
     let (sender, receiver) = mpsc::channel::<String>();
 
     loop {
         // Listen for client connections
         if let Ok((mut socket, addr)) = server.accept() {
-            println!("Client {} connected", addr);
+            if DBG {
+                println!("Client {} connected", addr);
+            }
 
             let sender = sender.clone();
             clients.push(socket.try_clone().expect("Failed to clone client socket"));
@@ -37,7 +42,10 @@ pub fn launch_server() {
                     Ok(_) => {
                         let msg = buf.into_iter().take_while(|&x| x != 0).collect::<Vec<_>>();
                         let msg = String::from_utf8(msg).expect("Invalid utf8 message");
-                        println!("{}: {:?}", addr, msg);
+                        
+                        if DBG {
+                            println!("{}: {:?}", addr, msg);
+                        }
 
                         let msg = format!("{}: {}", addr, msg);
 
