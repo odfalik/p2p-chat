@@ -1,9 +1,0 @@
-c:\Users\falik\Documents\School\21S\CS 4390 Networks\project\target\debug\deps\unicode_segmentation-5e3e8b4a0603bb8e.rmeta: C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\lib.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\grapheme.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\tables.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\word.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\sentence.rs
-
-c:\Users\falik\Documents\School\21S\CS 4390 Networks\project\target\debug\deps\unicode_segmentation-5e3e8b4a0603bb8e.d: C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\lib.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\grapheme.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\tables.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\word.rs C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\sentence.rs
-
-C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\lib.rs:
-C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\grapheme.rs:
-C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\tables.rs:
-C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\word.rs:
-C:\Users\falik\.cargo\registry\src\github.com-1ecc6299db9ec823\unicode-segmentation-1.7.1\src\sentence.rs:
