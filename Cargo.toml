@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 druid = "0.6.0"
 crossbeam-channel = "0.4"
+rustop = "1.1.1"

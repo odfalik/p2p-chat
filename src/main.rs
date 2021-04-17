@@ -1,27 +1,29 @@
 use std::thread;
 use std::env;
+use rustop::opts;
 
 mod server;
 mod client;
 
-
 fn main() {
-    let mut run_server = true;
 
-    let args: Vec<String> = env::args().collect();
-    for arg in args.iter() {
-        if arg.trim() == "--no-server" {
-            run_server = false;
-        }
-    }
-    println!("{:?}", args);
+    let (args, _) = opts! {
+        synopsis "A peer-to-peer TCP-based CLI messaging app";
+        opt no_server: Option<bool> = Some(false), desc: "";
+        opt debug: Option<bool> = Some(false), desc: "";
+        param server_ip: Option<String>, desc: "IP of server to connect to";
+    }.parse_or_exit();
 
     
-    if run_server {
+    if match args.no_server {
+        Some(v) => v,
+        None => true,
+    } {
         thread::spawn(|| {
             server::launch_server();
         });
     }
 
-    client::run_client();
+    // Run client on main thread
+    client::run_client(args.server_ip);
 }

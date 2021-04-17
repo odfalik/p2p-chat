@@ -7,7 +7,7 @@ use std::time::Duration;
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 32;
 
-pub fn run_client() {
+pub fn run_client(mut server_ip: Option<String>) {
 
     println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
     let mut std_buf = String::new();
