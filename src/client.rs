@@ -5,16 +5,21 @@ use std::thread;
 use std::time::Duration;
 
 const LOCAL: &str = "127.0.0.1:6000";
-const MSG_SIZE: usize = 32;
+const MSG_SIZE: usize = 64;
 
-pub fn run_client(mut server_ip: Option<String>) {
+pub fn run_client(arg_server_ip: Option<String>) {
+    let mut server_ip: &str = "";
 
-    println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
-    let mut std_buf = String::new();
-    stdin()
-        .read_line(&mut std_buf)
-        .expect("Reading from stdin failed!");
-    let mut server_ip = std_buf.trim();
+    if arg_server_ip.is_some() {
+        // server_ip = arg_server_ip.expect("fuck").trim(); // TODO
+    } else {
+        println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
+        let mut std_buf = String::new();
+        stdin()
+            .read_line(&mut std_buf)
+            .expect("Reading from stdin failed!");
+        // server_ip = &String::from(std_buf.trim());   // TODO
+    }
     if server_ip.len() == 0 {
         server_ip = LOCAL;
     }
@@ -30,7 +35,7 @@ pub fn run_client(mut server_ip: Option<String>) {
         .expect("Failed to set TcpStream non-blocking");
 
     // Create inter-thread channel
-    let (sender, receiver) = mpsc::channel::<String>();
+    let (tx, rx) = mpsc::channel::<String>();
 
     thread::spawn(move || loop {
         // Read from TCP stream
@@ -51,12 +56,11 @@ pub fn run_client(mut server_ip: Option<String>) {
         }
 
         // Check for message to send from stdin
-        match receiver.try_recv() {
+        match rx.try_recv() {
             Ok(msg) => {
                 let mut buf = msg.clone().into_bytes();
                 buf.resize(MSG_SIZE, 0);
                 socket.write_all(&buf).expect("Writing to socket failed");
-                // println!("Message sent!");
             }
             Err(TryRecvError::Empty) => (),
             Err(TryRecvError::Disconnected) => break,
@@ -73,9 +77,14 @@ pub fn run_client(mut server_ip: Option<String>) {
             .read_line(&mut buf)
             .expect("Reading from stdin failed!");
 
-        let msg = buf.trim().to_string();
+        let message = crate::shared::Message {
+            text: buf.trim().to_string(),
+        };
 
-        if msg == ":quit" || sender.send(msg).is_err() {
+        let json = serde_json::to_string_pretty(&message).expect("Couldn't serialize message");
+
+        // Pass message from command line to be sent
+        if tx.send(json).is_err() {
             break;
         }
     }

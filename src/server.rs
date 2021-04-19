@@ -1,12 +1,17 @@
-use std::io::{ErrorKind, Read, Write};
+use std::{io::{ErrorKind, Read, Write}, net::SocketAddr};
 use std::net::TcpListener;
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
 
 const LOCAL: &str = "127.0.0.1:6000";
-const MSG_SIZE: usize = 32;
-const DBG: bool = false;
+const MSG_SIZE: usize = 64;
+
+#[derive(Debug, Clone)]
+struct ServerEvent {
+    client_addr: SocketAddr,
+    msg: String
+}
 
 pub fn launch_server() {
     println!("Launching server on {}", LOCAL);
@@ -21,16 +26,13 @@ pub fn launch_server() {
 
     // Create inter-thread channel
     // TODO make ServerEvent struct
-    let (sender, receiver) = mpsc::channel::<String>();
+    let (tx, rx) = mpsc::channel::<ServerEvent>();
 
     loop {
         // Listen for client connections
         if let Ok((mut socket, addr)) = server.accept() {
-            if DBG {
-                println!("Client {} connected", addr);
-            }
 
-            let sender = sender.clone();
+            let tx = tx.clone();
             clients.push(socket.try_clone().expect("Failed to clone client socket"));
 
             // Spawn client-handling thread
@@ -42,16 +44,13 @@ pub fn launch_server() {
                     Ok(_) => {
                         let msg = buf.into_iter().take_while(|&x| x != 0).collect::<Vec<_>>();
                         let msg = String::from_utf8(msg).expect("Invalid utf8 message");
-                        
-                        if DBG {
-                            println!("{}: {:?}", addr, msg);
-                        }
-
-                        let msg = format!("{}: {}", addr, msg);
+                        let event = ServerEvent {
+                            client_addr: addr,
+                            msg: msg
+                        };
 
                         // Send formatted message to be published (on main thread)
-                        sender
-                            .send(msg)
+                        tx.send(event)
                             .unwrap_or_else(|_| panic!("Failed to send message to {}!", addr));
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
@@ -67,11 +66,12 @@ pub fn launch_server() {
         }
 
         // Check for new msg to send to all clients
-        if let Ok(msg) = receiver.try_recv() {
+        if let Ok(e) = rx.try_recv() {
             clients = clients
                 .into_iter()
                 .filter_map(|mut client| {
-                    let mut buf = msg.clone().into_bytes();
+                    let event = e.clone();
+                    let mut buf = format!("{}: {}", event.client_addr, event.msg).into_bytes();
 
                     buf.resize(MSG_SIZE, 0);
                     client.write_all(&buf).map(|_| client).ok()
