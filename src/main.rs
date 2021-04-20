@@ -1,23 +1,29 @@
+use druid::{Data, Lens};
 use rustop::opts;
 use std::thread;
 
 mod client;
 mod server;
 mod shared;
+mod ui;
+#[derive(Clone, Data, Lens)]
+pub struct State {
+    ip: String,
+    port: String,
+    username: String,
+    draft: String,
+    // #[data(ignore)]
+    msgs: String,
+}
 
 fn main() {
     let (args, _) = opts! {
         synopsis "A peer-to-peer TCP-based CLI messaging app";
         opt no_server: Option<bool> = Some(false), desc: "";
-        opt debug: Option<bool> = Some(false), desc: "";
-        param server_ip: Option<String>, desc: "IP of server to connect to";
     }
     .parse_or_exit();
 
-    println!(
-        "Args: {:?} {:?} {:?}",
-        args.no_server, args.debug, args.server_ip
-    );
+    println!("Args: {:?}", args.no_server);
 
     if match args.no_server {
         Some(v) => v,
@@ -28,6 +34,9 @@ fn main() {
         });
     }
 
-    // Run client on main thread
-    client::run_client(args.server_ip);
+    thread::spawn(|| {
+        client::run_client();
+    });
+
+    ui::main();
 }

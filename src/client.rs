@@ -7,22 +7,18 @@ use std::time::Duration;
 const LOCAL: &str = "127.0.0.1:6000";
 const MSG_SIZE: usize = 64;
 
-pub fn run_client(arg_server_ip: Option<String>) {
-    let mut server_ip: &str = "";
-
-    if arg_server_ip.is_some() {
-        // server_ip = arg_server_ip.expect("fuck").trim(); // TODO
-    } else {
-        println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
-        let mut std_buf = String::new();
-        stdin()
-            .read_line(&mut std_buf)
-            .expect("Reading from stdin failed!");
-        // server_ip = &String::from(std_buf.trim());   // TODO
-    }
+pub fn run_client(state: crate::State) {
+    println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
+    let mut std_buf = String::new();
+    stdin()
+        .read_line(&mut std_buf)
+        .expect("Reading from stdin failed!");
+    let mut server_ip: &str = &String::from(std_buf.trim());
     if server_ip.len() == 0 {
         server_ip = LOCAL;
     }
+
+    
 
     // Connect to server
     let mut socket = TcpStream::connect(server_ip)
