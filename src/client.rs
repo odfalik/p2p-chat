@@ -81,10 +81,10 @@ pub fn run_client(arg_server_ip: Option<String>) {
             text: buf.trim().to_string(),
         };
 
-        let json = serde_json::to_string_pretty(&message).expect("Couldn't serialize message");
+        // let json = serde_json::to_string_pretty(&message).expect("Couldn't serialize message");
 
         // Pass message from command line to be sent
-        if tx.send(json).is_err() {
+        if tx.send(message.text).is_err() {
             break;
         }
     }
