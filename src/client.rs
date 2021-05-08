@@ -9,7 +9,9 @@ const PORT: &str = ":6000";
 const MSG_SIZE: usize = 64;
 
 pub fn run_client(arg_server_ip: Option<String>) {
-    let mut server_ip = String::new();
+    std::thread::sleep(Duration::from_secs(1));
+
+    let mut server_ip;
 
     if arg_server_ip.is_some() {
         server_ip = arg_server_ip.expect("");
@@ -19,7 +21,7 @@ pub fn run_client(arg_server_ip: Option<String>) {
         stdin()
             .read_line(&mut std_buf)
             .expect("Reading from stdin failed!");
-        // server_ip = &String::from(std_buf.trim());   // TODO
+        server_ip = String::from(std_buf.trim());
     }
     if server_ip.len() == 0 {
         server_ip = String::from(LOCAL);
