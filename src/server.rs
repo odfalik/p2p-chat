@@ -4,7 +4,7 @@ use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
 
-const LOCAL: &str = "127.0.0.1:6000";
+const LOCAL: &str = "localhost:6000";
 const MSG_SIZE: usize = 64;
 
 #[derive(Debug, Clone)]

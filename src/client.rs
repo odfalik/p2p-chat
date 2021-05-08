@@ -4,14 +4,15 @@ use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::Duration;
 
-const LOCAL: &str = "127.0.0.1:6000";
+const LOCAL: &str = "localhost";
+const PORT: &str = ":6000";
 const MSG_SIZE: usize = 64;
 
 pub fn run_client(arg_server_ip: Option<String>) {
-    let mut server_ip: &str = "";
+    let mut server_ip = String::new();
 
     if arg_server_ip.is_some() {
-        // server_ip = arg_server_ip.expect("fuck").trim(); // TODO
+        server_ip = arg_server_ip.expect("");
     } else {
         println!("Enter an IP to connect to: \t\t\t (press enter to connect to localhost)");
         let mut std_buf = String::new();
@@ -21,12 +22,17 @@ pub fn run_client(arg_server_ip: Option<String>) {
         // server_ip = &String::from(std_buf.trim());   // TODO
     }
     if server_ip.len() == 0 {
-        server_ip = LOCAL;
+        server_ip = String::from(LOCAL);
     }
 
+    server_ip.push_str(PORT);
+
     // Connect to server
-    let mut socket = TcpStream::connect(server_ip)
-        .unwrap_or_else(|_| panic!("Failed to connect to {}", server_ip));
+    let mut socket = TcpStream::connect(server_ip.to_string())
+        .unwrap_or_else(|_| {
+            println!("Failed to connect to {}", server_ip);
+            std::process::exit(1);
+        });
 
     println!("Connected to {}", server_ip);
 
